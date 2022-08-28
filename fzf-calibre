@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-open() {
-    xdg-open "$1" &
-}
-
 calibredb list \
     --line-width 10000 \
     --fields title,authors,formats \
