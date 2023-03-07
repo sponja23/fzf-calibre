@@ -3,16 +3,22 @@
 calibredb list \
     --line-width 10000 \
     --fields title,authors,formats \
-    --separator=: |
+    --separator=\\ |
     tail -n +2 |
+    awk -F\\ '
+        function trim(field) {
+            gsub(/^ +| +$/, "", field)
+            return field
+        }
+        {print $1 "\\" $4 "\\" trim($2) ", " trim($3)}' |
     fzf-tmux -p80%,60% -- \
         --layout=reverse --multi --height=50% --min-height=20 --border \
         --ansi --color='header:italic:underline' \
         --preview-window='right,50%,border-left' \
         --prompt="📖 Calibre> " \
-        -d: \
-        --with-nth=2,3 \
+        -d\\ \
+        --with-nth=3 \
         --preview 'calibredb show_metadata {1}' |
-    cut -d: -f 4 |
+    cut -d\\ -f 2 |
     sed -e "s/^\[/'/" -e "s/\]$/'/" |
     (xargs xdg-open >/dev/null 2>&1 &)
