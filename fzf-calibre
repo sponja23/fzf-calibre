@@ -12,7 +12,7 @@ calibredb list \
         }
         {print $1 "\\" $4 "\\" trim($2) " - \033[1;36m" trim($3) "\033[0m"}' |
     fzf-tmux -p80%,60% -- \
-        --layout=reverse --multi --height=50% --min-height=20 --border \
+        --layout=reverse --multi --min-height=20 --border \
         --ansi --color='header:italic:underline' \
         --preview-window='right,50%,border-left' \
         --prompt="📖 Calibre> " \
